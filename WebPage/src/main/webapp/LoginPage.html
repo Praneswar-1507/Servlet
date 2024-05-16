@@ -5,7 +5,7 @@
 <style>  
 body{  
   font-family: Calibri, Helvetica, sans-serif;  
-  background-color: black;  
+  background-color: pink;  
 }  
 .container {  
     padding: 50px;  
@@ -19,6 +19,10 @@ input[type=text], input[type=password], textarea {
   display: inline-block;  
   border: none;  
   background: #f1f1f1;  
+}  
+input[type=text]:focus, input[type=password]:focus {  
+  background-color: orange;  
+  outline: none;  
 }  
  div {  
             padding: 10px 0;  
@@ -43,20 +47,20 @@ hr {
 </style>  
 </head>  
 <body>  
-<form action="ServletLogin" method="get">  
+<form action="ServletLoginPage" method="get">  
   <div class="container">  
   <center>  <h1> Student Registeration Form</h1> </center>  
   <hr>  
-  <label>Name </label>   
-<input type="text" name="firstname" placeholder= "Firstname" required />      
+  <label> Firstname </label>   
+<input type="text" name="firstname" placeholder= "Firstname" size="15" required />     
 <label> Lastname: </label>    
-<input type="text" name="lastname" placeholder="Lastname" required />   
+<input type="text" name="lastname" placeholder="Lastname" size="15"required />   
 <div>  
 <label>   
 Course :  
 </label>   
   
-<select>  
+<select name="course">  
 <option value="Course">Course</option>  
 <option value="BCA">BCA</option>  
 <option value="BBA">BBA</option>  
@@ -71,29 +75,24 @@ Course :
 Gender :  
 </label><br>  
 <input type="radio" value="Male" name="gender" checked > Male   
-<input type="radio" value="Female" name="gender"> Female     
- </div> 
-<br>
-<label for="date">DateOfBirth:</label>
-<input type="date"  name="date">
-<br>
-<br> 
-Phone :  
+<input type="radio" value="Female" name="gender"> Female   
+<input type="radio" value="Other" name="gender"> Other  
   
-<input type="text" name="phone" placeholder="phone no."  pattern="[0-9]{10}" required>   
-Current Address :  
-<textarea cols="80" rows="5" placeholder="Current Address" value="address" required>  
-</textarea>  
+</div>  
+<label>   
+Phone :  
+</label>     
+<input type="text" name="phone" placeholder="phone no." pattern="[0-9]{10}" required>   
+ 
  <label for="email"><b>Email</b></label>  
  <input type="text" placeholder="Enter Email" name="email" required>  
   
     <label for="psw"><b>Password</b></label>  
-    <input type="password" placeholder="Enter Password" name="psw" required>  
+    <input type="password" placeholder="Enter Password" name="psw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" required>  
   
     <label for="psw-repeat"><b>Re-type Password</b></label>  
     <input type="password" placeholder="Retype Password" name="psw-repeat" required>  
     <button type="submit" class="registerbtn">Register</button>    
-    </div>
 </form>  
 </body>  
 </html>  

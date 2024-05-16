@@ -33,6 +33,7 @@ public class DemoServlet extends HttpServlet {
 		System.out.println("get");
 		String name=request.getParameter("username");
 	    String password=request.getParameter("password");
+	    String Gender=request.getParameter("gender");
 	    PrintWriter out=response.getWriter();
 	    out.println("\nName:"+name);
 	    out.println("Password:"+password);
