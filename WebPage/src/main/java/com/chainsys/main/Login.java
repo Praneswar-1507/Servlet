@@ -1,27 +1,29 @@
-package com.chainsys.servlet;
+package com.chainsys.main;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.chainsys.model.LoginUser;
+import com.chainsys.util.JdbcUser;
+
 /**
- * Servlet implementation class ServletLoginPage
+ * Servlet implementation class Login
  */
-@WebServlet("/ServletLoginPage")
-public class ServletLoginPage extends HttpServlet {
+@WebServlet("/Login")
+public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-ListUser listuser=new ListUser();
+	LoginUser user=new LoginUser();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletLoginPage() {
+    public Login() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,20 +34,6 @@ ListUser listuser=new ListUser();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		String firstName=request.getParameter("firstname");
-		String lastName=request.getParameter("lastname");
-		String course=request.getParameter("course");
-		String gender=request.getParameter("gender");
-		String phoneno=request.getParameter("phone");
-		String email=request.getParameter("email");
-		String password=request.getParameter("psw");
-//		PrintWriter out=response.getWriter();
-//	    out.println("\nFirstName:"+firstName);
-//	    out.println("LastName:"+lastName);
-//	    out.println("Password:"+password);
-	  listuser.adduser(firstName, lastName,course, gender, email, phoneno, password);
-	  request.setAttribute("array",listuser.getArray());
-	  request.getRequestDispatcher("Login.jsp").forward(request,response);
 	}
 
 	/**
@@ -54,6 +42,19 @@ ListUser listuser=new ListUser();
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		String username=request.getParameter("username");
+		String email=request.getParameter("email");
+		String phonenumber=request.getParameter("phonenumber");
+		user.setUsername(username);
+		user.setEmail(email);
+		user.setPhonenumber(phonenumber);
+		try {
+			JdbcUser.insert(user);
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }
