@@ -38,7 +38,41 @@ public class Login extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		RequestDispatcher req=request.getRequestDispatcher("userLogin.jsp");
-//		req.forward(request, response);
+		String action = request.getParameter("action");
+	    if(action != null) {
+	        switch (action) {
+	        case "delete":
+	        	int idToDelete = Integer.parseInt(request.getParameter("deleteid"));
+	            try {
+                    
+                	JdbcUser d=new JdbcUser();
+                    d.deleteUser(idToDelete);
+                } catch (NumberFormatException | ClassNotFoundException | SQLException e) {
+                    e.printStackTrace();
+                    
+                }
+	            RequestDispatcher req=request.getRequestDispatcher("userLogin.jsp");
+	    		req.forward(request, response);
+	        case"update":
+	        	LoginUser userinfo=new LoginUser();
+	        int userupdateid=Integer.parseInt(request.getParameter("updateid"));
+	        userinfo.setId(userupdateid);
+	        userinfo.setUsername(request.getParameter("name"));
+	        userinfo.setEmail(request.getParameter("email"));
+	        userinfo.setPhonenumber(request.getParameter("phone"));
+				try {
+					JdbcUser.update(userinfo,userupdateid );
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+	        
+	        }
+	        RequestDispatcher req=request.getRequestDispatcher("userLogin.jsp");
+			req.forward(request, response);
+	    }
+
 	}
 
 	/**
@@ -63,34 +97,9 @@ public class Login extends HttpServlet {
 		}
 		RequestDispatcher req=request.getRequestDispatcher("userLogin.jsp");
 		req.forward(request, response);
-		String action = request.getParameter("action");
-		String deletename = request.getParameter("deleteid");
-	    if(action != null) {
-	        switch (action) {
-	        case "delete":
-	            try {
-	                
-	               JdbcUser d = new JdbcUser();
-	                d.deleteUser(request.getParameter(deletename));
-	            } catch (NumberFormatException | ClassNotFoundException | SQLException e) {
-	                e.printStackTrace();
-	                
-	            }
-
-	            try {
-					request.setAttribute("viewing",d.Read());
-				} catch (ClassNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	            request.getRequestDispatcher("LoginUser.jsp").forward(request, response);
-	            break;
+}
 	        }
-	        
-	       
-	    }
-	}
-	}
+	
 	
 	
 

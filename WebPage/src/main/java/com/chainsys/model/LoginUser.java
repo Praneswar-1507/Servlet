@@ -2,9 +2,18 @@ package com.chainsys.model;
 
 public class LoginUser {
 String username,email,phonenumber;
+int id;
 
 public String getUsername() {
 	return username;
+}
+
+public int getId() {
+	return id;
+}
+
+public void setId(int id) {
+	this.id = id;
 }
 
 public void setUsername(String username) {
@@ -27,11 +36,14 @@ public void setPhonenumber(String phonenumber) {
 	this.phonenumber = phonenumber;
 }
 
-public LoginUser(String username, String email, String phonenumber) {
+
+
+public LoginUser(String username, String email, String phonenumber, int id) {
 	super();
 	this.username = username;
 	this.email = email;
 	this.phonenumber = phonenumber;
+	this.id = id;
 }
 
 public LoginUser() {
@@ -40,7 +52,10 @@ public LoginUser() {
 
 @Override
 public String toString() {
-	return "LoginUser [username=" + username + ", email=" + email + ", phonenumber=" + phonenumber + "]";
+	return "LoginUser [username=" + username + ", email=" + email + ", phonenumber=" + phonenumber + ", id=" + id + "]";
 }
+
+
+
 
 }
