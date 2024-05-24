@@ -70,7 +70,7 @@
             <input type="tel" id="phone" name="phone" required>
         </div>
          <input type="hidden" name="action" value="update">
-        <input type="hidden" name="updateid" value="<%=request.getParameter("updateid") %>">
+        <input type="hidden" name="updateid" value="<%=request.getParameter("id") %>">
         <button type="submit" class="btn">Update</button> 
     </form>
 </div>

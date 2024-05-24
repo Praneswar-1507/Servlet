@@ -20,7 +20,7 @@ import com.chainsys.util.JdbcUser;
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	LoginUser user = new LoginUser();
-	JdbcUser d=new JdbcUser();
+	JdbcUser d = new JdbcUser();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -39,39 +39,42 @@ public class Login extends HttpServlet {
 		// TODO Auto-generated method stub
 //		RequestDispatcher req=request.getRequestDispatcher("userLogin.jsp");
 		String action = request.getParameter("action");
-	    if(action != null) {
-	        switch (action) {
-	        case "delete":
-	        	int idToDelete = Integer.parseInt(request.getParameter("deleteid"));
-	            try {
-                    
-                	JdbcUser d=new JdbcUser();
-                    d.deleteUser(idToDelete);
-                } catch (NumberFormatException | ClassNotFoundException | SQLException e) {
-                    e.printStackTrace();
-                    
-                }
-	            RequestDispatcher req=request.getRequestDispatcher("userLogin.jsp");
-	    		req.forward(request, response);
-	        case"update":
-	        	LoginUser userinfo=new LoginUser();
-	        int userupdateid=Integer.parseInt(request.getParameter("updateid"));
-	        userinfo.setId(userupdateid);
-	        userinfo.setUsername(request.getParameter("name"));
-	        userinfo.setEmail(request.getParameter("email"));
-	        userinfo.setPhonenumber(request.getParameter("phone"));
+		if (action != null) {
+			switch (action) {
+			case "delete":
+				int idToDelete = Integer.parseInt(request.getParameter("deleteid"));
 				try {
-					JdbcUser.update(userinfo,userupdateid );
+
+					JdbcUser d = new JdbcUser();
+					d.deleteUser(idToDelete);
+				} catch (NumberFormatException | ClassNotFoundException | SQLException e) {
+					e.printStackTrace();
+
+				}
+				RequestDispatcher req = request.getRequestDispatcher("userLogin.jsp");
+				req.forward(request, response);
+				break;
+			case "update":
+				LoginUser userinfo = new LoginUser();
+				int userupdateid = Integer.parseInt(request.getParameter("updateid"));
+				userinfo.setId(userupdateid);
+				userinfo.setUsername(request.getParameter("username"));
+				System.out.println(userinfo.getUsername());
+				userinfo.setEmail(request.getParameter("email"));
+				userinfo.setPhonenumber(request.getParameter("phone"));
+				try {
+					JdbcUser.update(userinfo, userupdateid);
 				} catch (ClassNotFoundException | SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-	        
-	        }
-	        RequestDispatcher req=request.getRequestDispatcher("userLogin.jsp");
-			req.forward(request, response);
-	    }
+
+				RequestDispatcher requ = request.getRequestDispatcher("userLogin.jsp");
+				requ.forward(request, response);
+				return;
+			}
+
+		}
 
 	}
 
@@ -95,11 +98,7 @@ public class Login extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		RequestDispatcher req=request.getRequestDispatcher("userLogin.jsp");
+		RequestDispatcher req = request.getRequestDispatcher("userLogin.jsp");
 		req.forward(request, response);
+	}
 }
-	        }
-	
-	
-	
-

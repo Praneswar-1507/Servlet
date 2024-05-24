@@ -22,47 +22,69 @@ public class JdbcUser implements UserDetails {
 		p.setString(3, user.getPhonenumber());
 		p.executeUpdate();
 	}
-	public ArrayList<LoginUser> Read() throws ClassNotFoundException, SQLException 
-	{
-		ArrayList<LoginUser>user=new ArrayList<LoginUser>();
+
+	public ArrayList<LoginUser> Read() throws ClassNotFoundException, SQLException {
+		ArrayList<LoginUser> user = new ArrayList<LoginUser>();
 		Connection connection = Util.getConnection();
-		String query="Select * from logindetails";
+		String query = "Select * from logindetails";
 		PreparedStatement p = connection.prepareStatement(query);
-		ResultSet rs=p.executeQuery();
-		while(rs.next())
-		{
-			LoginUser login=new LoginUser();
+		ResultSet rs = p.executeQuery();
+		while (rs.next()) {
+			LoginUser login = new LoginUser();
 			login.setId(rs.getInt("id"));
 			login.setUsername(rs.getString("username"));
 			login.setEmail(rs.getString("email"));
 			login.setPhonenumber(rs.getString("mobileNumber"));
 			user.add(login);
 		}
-		
+
 		return user;
 	}
-public void deleteUser(int id) throws ClassNotFoundException, SQLException {
-        
-        Class.forName("com.mysql.cj.jdbc.Driver");
+
+	public void deleteUser(int id) throws ClassNotFoundException, SQLException {
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection connection = Util.getConnection();
+		String delete = "delete from logindetails where id= " + id;
+		PreparedStatement prepareStatement = connection.prepareStatement(delete);
+		int row = prepareStatement.executeUpdate();
+		System.out.println("Affected row :" + row);
+
+	}
+
+	public static void update(LoginUser userlogin, int userupdateid) throws ClassNotFoundException, SQLException {
+		System.out.println(userlogin.getUsername() + " " + userlogin.getId());
+		Connection connection = Util.getConnection();
+		String query = "update logindetails set username=?,email=?,mobileNumber=? where id=?";
+		PreparedStatement ps = connection.prepareStatement(query);
+
+		ps.setString(1, userlogin.getUsername());
+
+		ps.setString(2, userlogin.getEmail());
+		ps.setString(3, userlogin.getPhonenumber());
+		ps.setInt(4, userupdateid);
+		int row = ps.executeUpdate();
+		System.out.println("updated  " + row);
+	}
+	public static ArrayList<LoginUser> searchByid(int id) throws ClassNotFoundException, SQLException {
+        ArrayList<LoginUser> user = new ArrayList<>(); 
+       Class.forName("com.mysql.cj.jdbc.Driver");
         Connection connection = Util.getConnection();
-        String delete = "delete from logindetails where id= "+id;
-        PreparedStatement prepareStatement = connection.prepareStatement(delete);
-        int row = prepareStatement.executeUpdate();
-        System.out.println("Affected row :"+row);
-           
-       
+        String update = "select username,email,mobileNumber from logindetails where id like ?";
+        PreparedStatement prepareStatement = connection.prepareStatement(update);
+        prepareStatement.setInt(1, "%" + id + "%");
+       ResultSet resultSet= prepareStatement.executeQuery();
+        while (resultSet.next()) {
+            
+        	LoginUser userlogin = new LoginUser(); 
+        	userlogin.setId(resultSet.getInt("id"));
+        	userlogin.setUsername(resultSet.getString("username"));
+        	userlogin.setEmail(resultSet.getString("email"));
+               userlogin.setPhonenumber(resultSet.getString("mobileNumber"));
+              
+               
+               user.add(LoginUser); 
+           }
+        return user;
    }
-public static void update( LoginUser userlogin,int userupdateid  ) throws ClassNotFoundException, SQLException {
-//    System.out.println(e.getName()+" "+e.getId());
-    Connection connection=Util.getConnection();
-    String query="update logindetails set username=?,email=?,mobileNumber=? where id=?";
-    PreparedStatement ps= connection.prepareStatement(query);
-    ps.setString(1, userlogin.getUsername());
-    
-    ps.setString(2, userlogin.getEmail());
-    ps.setString(3, userlogin.getPhonenumber());
-    ps.setInt(4, userupdateid);
-    int row = ps.executeUpdate();
-    System.out.println("updated  "+row);
-}
 }
