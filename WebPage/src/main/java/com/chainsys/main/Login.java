@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.chainsys.model.LoginUser;
 import com.chainsys.util.JdbcUser;
@@ -51,6 +52,12 @@ public class Login extends HttpServlet {
 					e.printStackTrace();
 
 				}
+				try {
+					request.setAttribute("log",d.Read());
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				RequestDispatcher req = request.getRequestDispatcher("userLogin.jsp");
 				req.forward(request, response);
 				break;
@@ -68,7 +75,12 @@ public class Login extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
+				try {
+					request.setAttribute("log",d.Read());
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				RequestDispatcher requ = request.getRequestDispatcher("userLogin.jsp");
 				requ.forward(request, response);
 				return;
@@ -94,7 +106,11 @@ public class Login extends HttpServlet {
 		user.setPhonenumber(phonenumber);
 		try {
 			JdbcUser.insert(user);
-		} catch (ClassNotFoundException | SQLException e) {
+			HttpSession Session=request.getSession();
+			Session.setAttribute("username", username);
+			request.setAttribute("log",d.Read());
+		} 
+		catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -66,13 +66,14 @@ public class JdbcUser implements UserDetails {
 		int row = ps.executeUpdate();
 		System.out.println("updated  " + row);
 	}
-	public static ArrayList<LoginUser> searchByid(int id) throws ClassNotFoundException, SQLException {
+	public static ArrayList<LoginUser> searchByName(String  name) throws ClassNotFoundException, SQLException {
         ArrayList<LoginUser> user = new ArrayList<>(); 
+        System.out.println(name);
        Class.forName("com.mysql.cj.jdbc.Driver");
         Connection connection = Util.getConnection();
-        String update = "select username,email,mobileNumber from logindetails where id like ?";
-        PreparedStatement prepareStatement = connection.prepareStatement(update);
-        prepareStatement.setInt(1, "%" + id + "%");
+        String search = "select id,username,email,mobileNumber from logindetails where username like ?";
+        PreparedStatement prepareStatement = connection.prepareStatement(search);
+        prepareStatement.setString(1, "%" + name + "%");
        ResultSet resultSet= prepareStatement.executeQuery();
         while (resultSet.next()) {
             
@@ -83,7 +84,7 @@ public class JdbcUser implements UserDetails {
                userlogin.setPhonenumber(resultSet.getString("mobileNumber"));
               
                
-               user.add(LoginUser); 
+               user.add(userlogin); 
            }
         return user;
    }

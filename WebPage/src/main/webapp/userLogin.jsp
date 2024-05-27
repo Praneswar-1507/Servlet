@@ -159,10 +159,12 @@ table.table td .add {
                         <h2>User <b>Details</b></h2>
                     </div>
                     <div class="col-sm-4">
+                    <form action="SearchServlet" method="Post">
                         <div class="search-container">
-                            <input type="text" placeholder="Search..." id="searchInput">
-                            <button type="button" id="searchButton"><i class="fa fa-search"></i></button>
+                            <input type="text" placeholder="Search..."name="search" >
+                            <button type="submit"><i class="fa fa-search"></i></button>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -179,7 +181,7 @@ table.table td .add {
                     <tbody>
                         <% 
                         JdbcUser use = new JdbcUser();
-                        ArrayList<LoginUser> array = use.Read();
+                        ArrayList<LoginUser> array = (ArrayList<LoginUser>)request.getAttribute("log");
                         for (LoginUser login : array) { 
                         %>
                         <tr>
@@ -202,7 +204,9 @@ table.table td .add {
             </form>
         </div>
     </div>
-
+    <form action="Logout" method="get">
+<button type="submit" class="btn">logout</button> 
+</form>
    
         
    

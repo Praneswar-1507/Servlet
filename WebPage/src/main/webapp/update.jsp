@@ -54,7 +54,7 @@
 </head>
 <body>
 <div class="container">
-    <h2>Login</h2>
+    <h2>Update Details</h2>
     <form action="Login" method="get">
     <input type="hidden" name="id" value="<%=request.getParameter("id")%>"> 
         <div class="input-group">
